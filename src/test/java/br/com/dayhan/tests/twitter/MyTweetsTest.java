@@ -19,11 +19,6 @@ public class MyTweetsTest {
 		List<Status> timeline = twitter.getHomeTimeline();
 	    System.out.println("\n===================== Últimos tweets ========================\n");
 	    assertNotNull(timeline);
-	    for (Status status : timeline) {
-	        System.out.println(status.getUser().getName() + ": " +
-	                           status.getText());
-	        System.out.println("-------------------------------------------------------------------");
-	    }
 	}
 
 }

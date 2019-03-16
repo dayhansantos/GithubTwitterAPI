@@ -17,13 +17,6 @@ public class GitubConnectTest {
 		List<SearchRepository> searchRepositories = service.searchRepositories("Internet of things");
 		
 		assertNotNull("A lista não deveria estar vazia", searchRepositories);
-		
-		for (SearchRepository result : searchRepositories) {
-			System.out.println("Name: " + result.getName());
-			System.out.println("Description: " + result.getDescription());
-			System.out.println("-------------------------------------------------------------------");
-		}
-		
 	}
 
 }
