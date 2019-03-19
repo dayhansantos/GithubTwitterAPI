@@ -2,14 +2,15 @@ package br.com.dayhan.factory;
 
 import br.com.dayhan.api.Api;
 import twitter4j.Query;
-import twitter4j.QueryResult;
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.conf.ConfigurationBuilder;
 
-public class TwitterBuilder implements Api{
+import java.util.List;
+
+public class TwitterBuilder implements Api<Status> {
 	
 	private Twitter twitter;
 	
@@ -28,22 +29,26 @@ public class TwitterBuilder implements Api{
 		twitter = tf.getInstance();
 	}
 
-	@Override
 	public void printSearch(String search) {
-		Query query = new Query(search);
-	    QueryResult result;
-		try {
-			result = twitter.search(query);
-		} catch (TwitterException e) {
-			throw new RuntimeException("Não foi possível consultar a API do Twitter");
-		}
-		if(!result.getTweets().isEmpty()) {
-			for (Status status : result.getTweets()) {
+		List<Status> tweets = this.search(search);
+		if(!tweets.isEmpty()) {
+			for (Status status : tweets) {
 				System.out.println("@" + status.getUser().getScreenName() + ": " + status.getText());
 				System.out.println("-------------------------------------------------------------------");
 			}
 		} else {
 			System.out.println("Sorry, not there is tweets about this project");
+		}
+	}
+
+
+	@Override
+	public List<Status> search(String search) {
+		Query query = new Query(search);
+		try {
+			return twitter.search(query).getTweets();
+		} catch (TwitterException e) {
+			throw new RuntimeException("Não foi possível consultar a API do Twitter");
 		}
 	}
 }

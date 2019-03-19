@@ -8,17 +8,17 @@ import org.eclipse.egit.github.core.SearchRepository;
 import br.com.dayhan.factory.GithubBuilder;
 import br.com.dayhan.factory.TwitterBuilder;
 
-public class Menu {
+class Menu {
 	
 	private static GithubBuilder githubBuilder;
 	private static TwitterBuilder twitterBuilder;
 	
-	public Menu() {
+	Menu() {
 		githubBuilder = new GithubBuilder();
 		twitterBuilder = new TwitterBuilder();
 	}
 	
-	public void showMenu() {
+	void showMenu() {
 		boolean valid;
 		try (Scanner scanner = new Scanner(System.in)) {
 			do {
@@ -26,6 +26,7 @@ public class Menu {
 				System.out.println("Informe a opção desejada:");
 				System.out.println("1. Listar os projetos do Github com o termo \"Internet of Things\"");
 				System.out.println("2. Buscar no twitter os projetos encontrados no Github \"Internet of Things\"");
+				System.out.println("3. Sair");
 				String option = scanner.nextLine();
 				
 				valid = selectOption(option);
@@ -37,14 +38,16 @@ public class Menu {
 		switch (option.trim()) {
 		case "1":
 			githubBuilder.printSearch("Internet of things");
-			return true;
+			return false;
 		case "2":
 			List<SearchRepository> search = githubBuilder.search("internet of things");
 			for (SearchRepository result : search) {
 				System.out.println("\n=================================== Listando tweets sobre o projeto " + result.getName() + " ===================================\n");
 				twitterBuilder.printSearch(result.getName());
 			}
-			return true;
+			return false;
+		case "3":
+			System.exit(0);
 		default:
 			System.out.println("Opção inválida\n\n\n");
 			return false;

@@ -1,13 +1,12 @@
 package br.com.dayhan.factory;
 
-import java.util.List;
-
+import br.com.dayhan.api.Api;
 import org.eclipse.egit.github.core.SearchRepository;
 import org.eclipse.egit.github.core.service.RepositoryService;
 
-import br.com.dayhan.api.Api;
+import java.util.List;
 
-public class GithubBuilder implements Api {
+public class GithubBuilder implements Api<SearchRepository> {
 
 	private RepositoryService service;
 
@@ -15,7 +14,6 @@ public class GithubBuilder implements Api {
 		service = new RepositoryService();
 	}
 
-	@Override
 	public void printSearch(String search) {
 		List<SearchRepository> repositories = search(search);
 		for (SearchRepository result : repositories) {
@@ -26,6 +24,7 @@ public class GithubBuilder implements Api {
 		}
 	}
 
+	@Override
 	public List<SearchRepository> search(String search) {
 		try {
 			return service.searchRepositories(search).subList(0, 10);

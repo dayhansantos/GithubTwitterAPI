@@ -1,5 +1,7 @@
 package br.com.dayhan.api;
 
-public interface Api {
-	void printSearch(String search);
+import java.util.List;
+
+public interface Api<T> {
+	List<T> search(String search);
 }
